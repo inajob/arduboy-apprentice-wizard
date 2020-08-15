@@ -54,8 +54,8 @@ void drawRect(struct Shape s){
 }
 void drawCircle(struct Shape s){
   arduboy.drawCircle(
-    32 + 8*s.pos.r*cos(PI*2/8*(s.pos.theta - cursor.theta - 2)),
-    32 + 8*s.pos.r*sin(PI*2/8*(s.pos.theta - cursor.theta - 2)),
+    32 + 8*s.pos.r*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)),
+    32 + 8*s.pos.r*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)),
     s.size * 4
   );
 }
@@ -89,10 +89,15 @@ void drawCursor(uint8_t col){
   s.type = mode;
   s.pos = cursor;
   s.size = size;
+  double preAnim = anim;
+  anim = 0;
   drawShape(s);
+  anim = preAnim;
 
   arduboy.drawCircle(32, 32, 2);
-  arduboy.drawLine(32, 32, 32 + 8*cos(PI*2.0*(cursor.theta-anim-2/8)), 32 + 8*sin(PI*2.0*(cursor.theta-anim-2/8)));
+  arduboy.drawLine(32, 32,
+    32 + 8*cos(PI*2.0*(-cursor.theta-anim-2)/8),
+    32 + 8*sin(PI*2.0*(-cursor.theta-anim-2)/8));
   arduboy.fillCircle(32, 32 - 8*cursor.r, 1);
 }
 
@@ -101,6 +106,10 @@ byte count = 0;
 void loop(){
   if(!arduboy.nextFrame()){return;}
   arduboy.pollButtons();
+
+  if(abs(anim) > 0.01){
+    anim = (abs(anim) - 0.1)*(anim/abs(anim));
+  }
 
   if(arduboy.justPressed(A_BUTTON)){
     if(arduboy.pressed(B_BUTTON)){
@@ -165,6 +174,7 @@ void loop(){
     }else{
       cursor.theta ++;
     }
+    anim = -1.0;
   }
   count ++;
 
