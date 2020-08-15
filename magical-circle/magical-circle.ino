@@ -28,45 +28,33 @@ void setup(){
 }
 
 void drawRect(struct Shape s){
-  //double x = 32 + 8*s.pos.r*cos(PI*2/8*s.pos.theta);
-  //double y = 32 + 8*s.pos.r*sin(PI*2/8*s.pos.theta);
-  //arduboy.drawRect(
-  //  x - s.size*4,
-  //  y - s.size*4,
-  //  s.size*8 + 1,
-  //  s.size*8 + 1 
-  //);
+  double rx0 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)            )/sqrt(2);
+  double ry0 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)            )/sqrt(2);
+  double rx1 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8 + 1.0/2))/sqrt(2);
+  double ry1 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8 + 1.0/2))/sqrt(2);
+  double rx2 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8 + 2.0/2))/sqrt(2);
+  double ry2 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8 + 2.0/2))/sqrt(2);
+  double rx3 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8 + 3.0/2))/sqrt(2);
+  double ry3 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8 + 3.0/2))/sqrt(2);
 
-  double rx0 = (7.0*s.size) * cos(PI*(2.0*s.pos.theta/8)            )/sqrt(2);
-  double ry0 = (7.0*s.size) * sin(PI*(2.0*s.pos.theta/8)            )/sqrt(2);
-  double rx1 = (7.0*s.size) * cos(PI*(2.0*s.pos.theta/8 + 1.0/2))/sqrt(2);
-  double ry1 = (7.0*s.size) * sin(PI*(2.0*s.pos.theta/8 + 1.0/2))/sqrt(2);
-  double rx2 = (7.0*s.size) * cos(PI*(2.0*s.pos.theta/8 + 2.0/2))/sqrt(2);
-  double ry2 = (7.0*s.size) * sin(PI*(2.0*s.pos.theta/8 + 2.0/2))/sqrt(2);
-  double rx3 = (7.0*s.size) * cos(PI*(2.0*s.pos.theta/8 + 3.0/2))/sqrt(2);
-  double ry3 = (7.0*s.size) * sin(PI*(2.0*s.pos.theta/8 + 3.0/2))/sqrt(2);
-
-  double x0 = rx0 + 8*s.pos.r * cos(PI*2/8*s.pos.theta) + 32;
-  double y0 = ry0 + 8*s.pos.r * sin(PI*2/8*s.pos.theta) + 32;
-  double x1 = rx1 + 8*s.pos.r * cos(PI*2/8*s.pos.theta) + 32;
-  double y1 = ry1 + 8*s.pos.r * sin(PI*2/8*s.pos.theta) + 32;
-  double x2 = rx2 + 8*s.pos.r * cos(PI*2/8*s.pos.theta) + 32;
-  double y2 = ry2 + 8*s.pos.r * sin(PI*2/8*s.pos.theta) + 32;
-  double x3 = rx3 + 8*s.pos.r * cos(PI*2/8*s.pos.theta) + 32;
-  double y3 = ry3 + 8*s.pos.r * sin(PI*2/8*s.pos.theta) + 32;
-
+  double x0 = rx0 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)) + 32;
+  double y0 = ry0 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)) + 32;
+  double x1 = rx1 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)) + 32;
+  double y1 = ry1 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)) + 32;
+  double x2 = rx2 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)) + 32;
+  double y2 = ry2 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)) + 32;
+  double x3 = rx3 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)) + 32;
+  double y3 = ry3 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - 2)/8)) + 32;
 
   arduboy.drawLine(x0,y0, x1,y1);
   arduboy.drawLine(x1,y1, x2,y2);
   arduboy.drawLine(x2,y2, x3,y3);
   arduboy.drawLine(x3,y3, x0,y0);
-
-
 }
 void drawCircle(struct Shape s){
   arduboy.drawCircle(
-    32 + 8*s.pos.r*cos(PI*2/8*s.pos.theta),
-    32 + 8*s.pos.r*sin(PI*2/8*s.pos.theta),
+    32 + 8*s.pos.r*cos(PI*2/8*(s.pos.theta - cursor.theta - 2)),
+    32 + 8*s.pos.r*sin(PI*2/8*(s.pos.theta - cursor.theta - 2)),
     s.size * 4
   );
 }
@@ -103,7 +91,7 @@ void drawCursor(uint8_t col){
   drawShape(s);
 
   arduboy.drawCircle(32, 32, 2);
-  arduboy.fillCircle(32 + 8*cursor.r*cos(PI*2/8*cursor.theta), 32 + 8*cursor.r*sin(PI*2/8*cursor.theta), 1);
+  arduboy.fillCircle(32, 32 - 8*cursor.r, 1);
 }
 
 byte count = 0;
@@ -161,14 +149,14 @@ void loop(){
       }
     }
   }
-  if(arduboy.justPressed(LEFT_BUTTON)){
+  if(arduboy.justPressed(RIGHT_BUTTON)){
     if(cursor.theta == 0){
       cursor.theta = 7;
     }else{
       cursor.theta --;
     }
   }
-  if(arduboy.justPressed(RIGHT_BUTTON)){
+  if(arduboy.justPressed(LEFT_BUTTON)){
     if(cursor.theta == 7){
       cursor.theta = 0;
     }else{
