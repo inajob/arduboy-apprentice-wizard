@@ -1,6 +1,7 @@
 #include "Clear.h"
 
-void Clear::init(){
+void Clear::init(Game *pgame){
+  game = pgame
 }
 
 SceneID Clear::run(){
