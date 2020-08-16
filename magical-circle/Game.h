@@ -1,10 +1,10 @@
 #include "Scene.h"
+#include "ShapeType.h"
 
 #ifndef Game_h
 #define Game_h
 extern Arduboy2 arduboy;
 
-enum ShapeType {NONE, RECT, CIRCLE};
 
 struct Position{
   byte r;

@@ -1,8 +1,8 @@
 #include "Game.h"
 #include "stage.h"
-  const byte MAX_SHAPE=10;
-  struct Shape shapes[MAX_SHAPE];
-  struct Shape exampleShapes[MAX_SHAPE];
+const byte MAX_SHAPE=10;
+struct Shape shapes[MAX_SHAPE];
+struct Shape exampleShapes[MAX_SHAPE];
 
 
 enum ShapeType mode = CIRCLE;
@@ -49,6 +49,7 @@ bool Game::equalShape(struct Shape s1, struct Shape s2){
         s1.pos.theta == s2.pos.theta &&
         s1.size == s2.size;
   }
+  return false;
 }
 
 void Game::clear(){
@@ -83,7 +84,7 @@ bool Game::check(){
   return true;
 }
 
-void Game::drawRect(struct Shape s, byte ox = 0, byte oy = 0){
+void Game::drawRect(struct Shape s, byte ox, byte oy){
   double rx0 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
   double ry0 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
   double rx1 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
@@ -107,14 +108,14 @@ void Game::drawRect(struct Shape s, byte ox = 0, byte oy = 0){
   arduboy.drawLine(ox + x2, oy + y2, ox + x3, oy + y3);
   arduboy.drawLine(ox + x3, oy + y3, ox + x0, oy + y0);
 }
-void Game::drawCircle(struct Shape s, byte ox = 0, byte oy = 0){
+void Game::drawCircle(struct Shape s, byte ox, byte oy){
   arduboy.drawCircle(
     32 + 8*s.pos.r*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
     32 + 8*s.pos.r*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + oy,
     s.size * 4
   );
 }
-void Game::drawShape(struct Shape s, byte ox = 0, byte oy = 0){
+void Game::drawShape(struct Shape s, byte ox, byte oy){
   switch(s.type){
     case NONE:
       break;
@@ -227,6 +228,7 @@ SceneID Game::run(){
       switch(mode){
         case RECT: mode = CIRCLE; break;
         case CIRCLE: mode = RECT; break;
+        case NONE: break;
       }
     }
   }
@@ -242,6 +244,7 @@ SceneID Game::run(){
       switch(mode){
         case RECT: mode = CIRCLE; break;
         case CIRCLE: mode = RECT; break;
+        case NONE: break;
       }
     }
   }
