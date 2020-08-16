@@ -20,6 +20,10 @@ struct Shape {
 class Game : public Scene
 {
   public:
+  const byte MAX_SHAPE=10;
+  struct Shape shapes[MAX_SHAPE];
+  struct Shape exampleShapes[MAX_SHAPE];
+
   virtual bool equalShape(struct Shape s1, struct Shape s2);
   virtual void clear();
   virtual bool check();
