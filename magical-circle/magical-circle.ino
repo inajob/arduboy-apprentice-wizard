@@ -19,7 +19,7 @@ void setup(){
   title.init();
   ready.init();
   game.init();
-  clear.init();
+  clear.init(&game);
   scene = &title;
 
 }

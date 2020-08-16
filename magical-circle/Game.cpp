@@ -154,9 +154,6 @@ SceneID Game::run(){
   }
 
   if(check()){
-    clear();
-    stage ++;
-    loadExample(stage);
     return CLEAR;
   }
 
@@ -249,6 +246,4 @@ void Game::draw(){
   if(count%2 == 0){
     drawCursor(WHITE);
   }
-  arduboy.setCursor(0,0);
-  arduboy.println(F("Game"));
 }
