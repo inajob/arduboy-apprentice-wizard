@@ -1,19 +1,7 @@
 #include "Game.h"
 #include "stage.h"
-const byte MAX_SHAPE=10;
-struct Shape shapes[MAX_SHAPE];
-struct Shape exampleShapes[MAX_SHAPE];
 
-
-enum ShapeType mode = CIRCLE;
-byte shapeIndex = 0;
-struct Position cursor = {0, 0};
-byte size = 1;
-double anim = 0;
-byte stage = 0;
-
-
-void loadExample(byte n){
+void Game::loadExample(byte n){
   cursor.r = 0;
   cursor.theta = 0;
   size = 4;
@@ -169,6 +157,7 @@ SceneID Game::run(){
     clear();
     stage ++;
     loadExample(stage);
+    return CLEAR;
   }
 
   if(arduboy.justPressed(A_BUTTON)){

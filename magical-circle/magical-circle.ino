@@ -2,12 +2,14 @@
 #include "Game.h"
 #include "Title.h"
 #include "Ready.h"
+#include "Clear.h"
 
 Scene* scene;
 
 Title title;
 Ready ready;
 Game game;
+Clear clear;
 Arduboy2 arduboy;
 
 void setup(){
@@ -17,6 +19,7 @@ void setup(){
   title.init();
   ready.init();
   game.init();
+  clear.init();
   scene = &title;
 
 }
@@ -40,6 +43,9 @@ void loop(){
       break;
     case GAME:
       scene = &game;
+      break;
+    case CLEAR:
+      scene = &clear;
       break;
   }
   /*

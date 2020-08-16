@@ -1,11 +1,11 @@
-#include "Ready.h"
+#include "Clear.h"
 
-void Ready::init(){
-  counter = 100;
+void Clear::init(){
 }
 
-SceneID Ready::run(){
+SceneID Clear::run(){
   if(arduboy.justPressed(A_BUTTON)){
+    return GAME;
   }
   if(arduboy.justPressed(UP_BUTTON)){
   }
@@ -16,17 +16,11 @@ SceneID Ready::run(){
   if(arduboy.justPressed(RIGHT_BUTTON)){
   }
 
-  counter--;
-  if(counter == 0){
-    counter = 100;
-    return GAME;
-  }
   return STAY;
 }
 
-void Ready::draw(){
+void Clear::draw(){
   arduboy.clear();
   arduboy.setCursor(0,0);
-  arduboy.println(F("READY?"));
-  arduboy.println(counter);
+  arduboy.println(F("CLEAR"));
 }

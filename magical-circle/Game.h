@@ -20,10 +20,17 @@ struct Shape {
 class Game : public Scene
 {
   public:
-  const byte MAX_SHAPE=10;
+  static const byte MAX_SHAPE=10;
   struct Shape shapes[MAX_SHAPE];
   struct Shape exampleShapes[MAX_SHAPE];
+  enum ShapeType mode = CIRCLE;
+  byte shapeIndex = 0;
+  struct Position cursor = {0, 0};
+  byte size = 1;
+  double anim = 0;
+  byte stage = 0;
 
+  virtual void loadExample(byte n);
   virtual bool equalShape(struct Shape s1, struct Shape s2);
   virtual void clear();
   virtual bool check();
