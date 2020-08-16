@@ -14,21 +14,155 @@ struct Shape {
 };
 
 enum ShapeType mode = RECT;
-const byte MAX_SHAPE=30;
+const byte MAX_SHAPE=10;
 struct Shape shapes[MAX_SHAPE];
+struct Shape exampleShapes[MAX_SHAPE];
 byte shapeIndex = 0;
 struct Position cursor = {0, 0};
 byte size = 1;
 double anim = 0;
+byte stage = 0;
+
+const byte stages[][10][4] PROGMEM = {
+  { // simple circle
+    {0,0,CIRCLE, 8},
+    {0,0,CIRCLE, 7},
+    {0,0,CIRCLE, 4},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+  },
+  { // simple rect
+    {0,0,CIRCLE, 8},
+    {0,0,CIRCLE, 7},
+    {0,0,RECT, 4},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+  },
+  { // sun
+    {0,0,RECT, 6},
+    {0,1,RECT, 6},
+    {0,0,CIRCLE, 4},
+    {0,0,CIRCLE, 5},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+  },
+  { // simple magic
+    {0,0,RECT, 5},
+    {0,1,RECT, 5},
+    {0,0,CIRCLE, 7},
+    {0,0,CIRCLE, 8},
+    {0,0,CIRCLE, 1},
+    {0,0,CIRCLE, 2},
+    {0,0,CIRCLE, 3},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+  },
+  { // twin force
+    {0,0,CIRCLE, 8},
+    {0,0,CIRCLE, 7},
+    {2,0,CIRCLE, 3},
+    {2,4,CIRCLE, 3},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+    {0,0,NONE, 0},
+  }
+};
 
 Arduboy2 arduboy;
 
 void setup(){
   arduboy.begin();
   arduboy.setFrameRate(30);
+
+  loadExample(0);
 }
 
-void drawRect(struct Shape s){
+void loadExample(byte n){
+  for(byte i = 0; i < MAX_SHAPE; i ++){
+    struct Shape s;
+    s.pos.r = pgm_read_byte_near(&stages[n][i][0]);
+    s.pos.theta = pgm_read_byte_near(&stages[n][i][1]);
+    s.type = pgm_read_byte_near(&stages[n][i][2]);
+    s.size = pgm_read_byte_near(&stages[n][i][3]);
+    exampleShapes[i] = s;
+  }
+}
+
+bool equalShape(struct Shape s1, struct Shape s2){
+  if(s1.type != s2.type){return false;}
+  switch(s1.type){
+    case NONE:
+      return true;
+    case RECT:
+      if(s1.pos.r == 0 && s1.pos.r == s2.pos.r){
+        return (s1.size == s2.size) &&
+          (s1.pos.theta%2 == s2.pos.theta%2);
+      }
+      return s1.pos.r == s2.pos.r &&
+             s1.pos.theta == s2.pos.theta &&
+             s1.size == s2.size;
+
+    case CIRCLE:
+      if(s1.pos.r == 0 && s1.pos.r == s2.pos.r){
+        return s1.size == s2.size;
+      }
+      return s1.pos.r == s2.pos.r &&
+        s1.pos.theta == s2.pos.theta &&
+        s1.size == s2.size;
+  }
+}
+
+void clear(){
+  for(byte i = 0; i < MAX_SHAPE; i ++){
+    shapes[i].type = NONE;
+  }
+  shapeIndex = 0;
+}
+
+bool check(){
+  bool flag;
+  for(byte i = 0; i < MAX_SHAPE; i ++){
+    flag = false;
+    for(byte j = 0; j < MAX_SHAPE; j ++){
+      if(equalShape(exampleShapes[i], shapes[j])){
+        flag = true;
+        break;
+      }
+    }
+    if(flag == false){return false;}
+  }
+  for(byte i = 0; i < MAX_SHAPE; i ++){
+    flag = false;
+    for(byte j = 0; j < MAX_SHAPE; j ++){
+      if(equalShape(exampleShapes[j], shapes[i])){
+        flag = true;
+        break;
+      }
+    }
+    if(flag == false){return false;}
+  }
+  return true;
+}
+
+void drawRect(struct Shape s, byte ox = 0, byte oy = 0){
   double rx0 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
   double ry0 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
   double rx1 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
@@ -47,27 +181,27 @@ void drawRect(struct Shape s){
   double x3 = rx3 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
   double y3 = ry3 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
 
-  arduboy.drawLine(x0,y0, x1,y1);
-  arduboy.drawLine(x1,y1, x2,y2);
-  arduboy.drawLine(x2,y2, x3,y3);
-  arduboy.drawLine(x3,y3, x0,y0);
+  arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
+  arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
+  arduboy.drawLine(ox + x2, oy + y2, ox + x3, oy + y3);
+  arduboy.drawLine(ox + x3, oy + y3, ox + x0, oy + y0);
 }
-void drawCircle(struct Shape s){
+void drawCircle(struct Shape s, byte ox = 0, byte oy = 0){
   arduboy.drawCircle(
-    32 + 8*s.pos.r*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)),
-    32 + 8*s.pos.r*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)),
+    32 + 8*s.pos.r*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
+    32 + 8*s.pos.r*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + oy,
     s.size * 4
   );
 }
-void drawShape(struct Shape s){
+void drawShape(struct Shape s, byte ox = 0, byte oy = 0){
   switch(s.type){
     case NONE:
       break;
     case RECT:
-      drawRect(s);
+      drawRect(s, ox, oy);
       break;
     case CIRCLE:
-      drawCircle(s);
+      drawCircle(s, ox, oy);
       break;
   }
 }
@@ -75,12 +209,9 @@ void drawShape(struct Shape s){
 void draw(){
   for(byte i = 0; i < MAX_SHAPE; i ++){
     drawShape(shapes[i]);
+    drawShape(exampleShapes[i], 64, 0);
   }
   arduboy.setCursor(0,0);
-  switch(mode){
-    case RECT:  arduboy.println("RECT");break;
-    case CIRCLE:arduboy.println("CIRCLE");break;
-  }
 }
 
 void drawCursor(uint8_t col){
@@ -111,13 +242,15 @@ void loop(){
     anim = (abs(anim) - 0.1)*(anim/abs(anim));
   }
 
+  if(check()){
+    clear();
+    stage ++;
+    loadExample(stage);
+  }
+
   if(arduboy.justPressed(A_BUTTON)){
     if(arduboy.pressed(B_BUTTON)){
-      // change
-      switch(mode){
-        case RECT: mode = CIRCLE; break;
-        case CIRCLE: mode = RECT; break;
-      }
+      clear();
     }else{
       // put shape
       struct Shape* cur = &shapes[shapeIndex];
@@ -161,20 +294,34 @@ void loop(){
     }
   }
   if(arduboy.justPressed(RIGHT_BUTTON)){
-    if(cursor.theta == 0){
-      cursor.theta = 7;
+    if(arduboy.pressed(B_BUTTON)){
+      if(cursor.theta == 0){
+        cursor.theta = 7;
+      }else{
+        cursor.theta --;
+      }
+      anim = 1.0;
     }else{
-      cursor.theta --;
+      switch(mode){
+        case RECT: mode = CIRCLE; break;
+        case CIRCLE: mode = RECT; break;
+      }
     }
-    anim = 1.0;
   }
   if(arduboy.justPressed(LEFT_BUTTON)){
-    if(cursor.theta == 7){
-      cursor.theta = 0;
+    if(arduboy.pressed(B_BUTTON)){
+      if(cursor.theta == 7){
+        cursor.theta = 0;
+      }else{
+        cursor.theta ++;
+      }
+      anim = -1.0;
     }else{
-      cursor.theta ++;
+      switch(mode){
+        case RECT: mode = CIRCLE; break;
+        case CIRCLE: mode = RECT; break;
+      }
     }
-    anim = -1.0;
   }
   count ++;
 
