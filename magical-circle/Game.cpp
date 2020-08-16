@@ -1,92 +1,22 @@
 #include "Game.h"
-enum ShapeType {NONE, RECT, CIRCLE};
-
-const byte stages[][10][4] PROGMEM = {
-  { // simple circle
-    {0,0,CIRCLE, 8},
-    {0,0,CIRCLE, 7},
-    {0,0,CIRCLE, 4},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-  },
-  { // simple rect
-    {0,0,CIRCLE, 8},
-    {0,0,CIRCLE, 7},
-    {0,0,RECT, 4},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-  },
-  { // sun
-    {0,0,RECT, 6},
-    {0,1,RECT, 6},
-    {0,0,CIRCLE, 4},
-    {0,0,CIRCLE, 5},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-  },
-  { // simple magic
-    {0,0,RECT, 5},
-    {0,1,RECT, 5},
-    {0,0,CIRCLE, 7},
-    {0,0,CIRCLE, 8},
-    {0,0,CIRCLE, 1},
-    {0,0,CIRCLE, 2},
-    {0,0,CIRCLE, 3},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-  },
-  { // twin force
-    {0,0,CIRCLE, 8},
-    {0,0,CIRCLE, 7},
-    {2,0,CIRCLE, 3},
-    {2,4,CIRCLE, 3},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-    {0,0,NONE, 0},
-  }
-};
+#include "stage.h"
+  const byte MAX_SHAPE=10;
+  struct Shape shapes[MAX_SHAPE];
+  struct Shape exampleShapes[MAX_SHAPE];
 
 
-struct Position{
-  byte r;
-  byte theta;
-};
-
-struct Shape {
-  struct Position pos;
-  enum ShapeType type;
-  byte size;
-};
-
-enum ShapeType mode = RECT;
-const byte MAX_SHAPE=10;
-struct Shape shapes[MAX_SHAPE];
-struct Shape exampleShapes[MAX_SHAPE];
+enum ShapeType mode = CIRCLE;
 byte shapeIndex = 0;
 struct Position cursor = {0, 0};
 byte size = 1;
 double anim = 0;
 byte stage = 0;
 
+
 void loadExample(byte n){
+  cursor.r = 0;
+  cursor.theta = 0;
+  size = 4;
   for(byte i = 0; i < MAX_SHAPE; i ++){
     struct Shape s;
     s.pos.r = pgm_read_byte_near(&stages[n][i][0]);
@@ -97,7 +27,7 @@ void loadExample(byte n){
   }
 }
 
-bool equalShape(struct Shape s1, struct Shape s2){
+bool Game::equalShape(struct Shape s1, struct Shape s2){
   if(s1.type != s2.type){return false;}
   switch(s1.type){
     case NONE:
@@ -121,14 +51,14 @@ bool equalShape(struct Shape s1, struct Shape s2){
   }
 }
 
-void clear(){
+void Game::clear(){
   for(byte i = 0; i < MAX_SHAPE; i ++){
     shapes[i].type = NONE;
   }
   shapeIndex = 0;
 }
 
-bool check(){
+bool Game::check(){
   bool flag;
   for(byte i = 0; i < MAX_SHAPE; i ++){
     flag = false;
@@ -153,7 +83,7 @@ bool check(){
   return true;
 }
 
-void drawRect(struct Shape s, byte ox = 0, byte oy = 0){
+void Game::drawRect(struct Shape s, byte ox = 0, byte oy = 0){
   double rx0 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
   double ry0 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
   double rx1 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
@@ -177,14 +107,14 @@ void drawRect(struct Shape s, byte ox = 0, byte oy = 0){
   arduboy.drawLine(ox + x2, oy + y2, ox + x3, oy + y3);
   arduboy.drawLine(ox + x3, oy + y3, ox + x0, oy + y0);
 }
-void drawCircle(struct Shape s, byte ox = 0, byte oy = 0){
+void Game::drawCircle(struct Shape s, byte ox = 0, byte oy = 0){
   arduboy.drawCircle(
     32 + 8*s.pos.r*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
     32 + 8*s.pos.r*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + oy,
     s.size * 4
   );
 }
-void drawShape(struct Shape s, byte ox = 0, byte oy = 0){
+void Game::drawShape(struct Shape s, byte ox = 0, byte oy = 0){
   switch(s.type){
     case NONE:
       break;
@@ -197,7 +127,7 @@ void drawShape(struct Shape s, byte ox = 0, byte oy = 0){
   }
 }
 
-void gameDraw(){
+void Game::gameDraw(){
   for(byte i = 0; i < MAX_SHAPE; i ++){
     drawShape(shapes[i]);
     drawShape(exampleShapes[i], 64, 0);
@@ -205,7 +135,7 @@ void gameDraw(){
   arduboy.setCursor(0,0);
 }
 
-void drawCursor(uint8_t col){
+void Game::drawCursor(uint8_t col){
   // draw (-0.5, -0.5) - (0.5, 0.5)
   struct Shape s;
   s.type = mode;
