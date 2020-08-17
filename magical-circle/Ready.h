@@ -6,8 +6,9 @@ extern Arduboy2 arduboy;
 
 class Ready : public Scene
 {
-  int counter;
   public:
+  int counter;
+  int stage;
   virtual void init();
   virtual SceneID run();
   virtual void draw();

@@ -34,11 +34,13 @@ void loop(){
 
   switch(nextSceneID){
     case STAY:
+      arduboy.display();
       break;
     case TITLE:
       scene = &title;
       break;
     case READY:
+      ready.stage = game.stage; // TODO
       scene = &ready;
       break;
     case GAME:
@@ -48,7 +50,4 @@ void loop(){
       scene = &clear;
       break;
   }
-  /*
-  */
-  arduboy.display();
 }

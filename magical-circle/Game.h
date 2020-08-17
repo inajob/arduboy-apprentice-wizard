@@ -28,7 +28,9 @@ class Game : public Scene
   struct Position cursor = {0, 0};
   byte size = 1;
   double anim = 0;
+  double scale = 1;
   byte stage = 0;
+  bool showCursor = true;
 
   virtual void loadExample(byte n);
   virtual bool equalShape(struct Shape s1, struct Shape s2);

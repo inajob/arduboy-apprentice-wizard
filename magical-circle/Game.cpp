@@ -73,23 +73,23 @@ bool Game::check(){
 }
 
 void Game::drawRect(struct Shape s, byte ox, byte oy){
-  double rx0 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
-  double ry0 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
-  double rx1 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
-  double ry1 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
-  double rx2 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/2))/sqrt(2);
-  double ry2 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/2))/sqrt(2);
-  double rx3 = (7.0*s.size) * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 3.0/2))/sqrt(2);
-  double ry3 = (7.0*s.size) * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 3.0/2))/sqrt(2);
+  double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
+  double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
+  double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
+  double ry1 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
+  double rx2 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/2))/sqrt(2);
+  double ry2 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/2))/sqrt(2);
+  double rx3 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 3.0/2))/sqrt(2);
+  double ry3 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 3.0/2))/sqrt(2);
 
-  double x0 = rx0 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y0 = ry0 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x1 = rx1 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y1 = ry1 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x2 = rx2 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y2 = ry2 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x3 = rx3 + 8*s.pos.r * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y3 = ry3 + 8*s.pos.r * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x0 = rx0 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y0 = ry0 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x1 = rx1 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y1 = ry1 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x2 = rx2 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y2 = ry2 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x3 = rx3 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y3 = ry3 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
 
   arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
   arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
@@ -98,9 +98,9 @@ void Game::drawRect(struct Shape s, byte ox, byte oy){
 }
 void Game::drawCircle(struct Shape s, byte ox, byte oy){
   arduboy.drawCircle(
-    32 + 8*s.pos.r*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
-    32 + 8*s.pos.r*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + oy,
-    s.size * 4
+    32 + 8*s.pos.r*scale*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
+    32 + 8*s.pos.r*scale*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + oy,
+    s.size * 4 * scale
   );
 }
 void Game::drawShape(struct Shape s, byte ox, byte oy){
@@ -243,7 +243,7 @@ void Game::draw(){
   arduboy.clear();
   arduboy.drawRect(0,0,128,64);
   gameDraw();
-  if(count%2 == 0){
+  if(count%2 == 0 && showCursor){
     drawCursor(WHITE);
   }
 }
