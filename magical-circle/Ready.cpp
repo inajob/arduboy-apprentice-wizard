@@ -1,4 +1,5 @@
 #include "Ready.h"
+#include "stage.h"
 
 void Ready::init(){
   counter = 100;
@@ -26,10 +27,15 @@ SceneID Ready::run(){
 }
 
 void Ready::draw(){
+  char buf[32];
+
   arduboy.clear();
   arduboy.setCursor(0,0);
   arduboy.print(F("STAGE"));
-  arduboy.println(stage + 1);
+  arduboy.print(stage + 1);
+  arduboy.print(':');
+  strcpy_P(buf, (char*)pgm_read_word(&stageTitles[stage]));
+  arduboy.println(buf);
   //arduboy.println(counter);
 
   arduboy.setCursor(0,16);

@@ -6,6 +6,7 @@ void Game::loadExample(byte n){
   cursor.theta = 0;
   size = 4;
   for(byte i = 0; i < MAX_SHAPE; i ++){
+    if(i >= 10) break; // TODO
     struct Shape s;
     s.pos.r = pgm_read_byte_near(&stages[n][i][0]);
     s.pos.theta = pgm_read_byte_near(&stages[n][i][1]);
@@ -36,6 +37,15 @@ bool Game::equalShape(struct Shape s1, struct Shape s2){
       return s1.pos.r == s2.pos.r &&
         s1.pos.theta == s2.pos.theta &&
         s1.size == s2.size;
+    case UTRI:
+    case DTRI:
+      return s1.pos.r == s2.pos.r &&
+        s1.pos.theta == s2.pos.theta &&
+        s1.size == s2.size;
+    case VLINE:
+      // ignore size
+      return s1.pos.r == s2.pos.r &&
+        s1.pos.theta == s2.pos.theta;
   }
   return false;
 }
@@ -73,8 +83,8 @@ bool Game::check(){
 }
 
 void Game::drawRect(struct Shape s, byte ox, byte oy){
-  double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
-  double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)            )/sqrt(2);
+  double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
+  double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
   double ry1 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
   double rx2 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/2))/sqrt(2);
@@ -96,6 +106,60 @@ void Game::drawRect(struct Shape s, byte ox, byte oy){
   arduboy.drawLine(ox + x2, oy + y2, ox + x3, oy + y3);
   arduboy.drawLine(ox + x3, oy + y3, ox + x0, oy + y0);
 }
+void Game::drawUtri(struct Shape s, byte ox, byte oy){
+  double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
+  double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
+  double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3))/sqrt(2);
+  double ry1 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3))/sqrt(2);
+  double rx2 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 4.0/3))/sqrt(2);
+  double ry2 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 4.0/3))/sqrt(2);
+
+  double x0 = rx0 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y0 = ry0 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x1 = rx1 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y1 = ry1 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x2 = rx2 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y2 = ry2 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+
+  arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
+  arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
+  arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
+}
+void Game::drawDtri(struct Shape s, byte ox, byte oy){
+  double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8         + 1.0/3))/sqrt(2);
+  double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8         + 1.0/3))/sqrt(2);
+  double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3 + 1.0/3))/sqrt(2);
+  double ry1 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3 + 1.0/3))/sqrt(2);
+  double rx2 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 4.0/3 + 1.0/3))/sqrt(2);
+  double ry2 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 4.0/3 + 1.0/3))/sqrt(2);
+
+  double x0 = rx0 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y0 = ry0 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x1 = rx1 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y1 = ry1 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x2 = rx2 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y2 = ry2 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+
+  arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
+  arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
+  arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
+}
+void Game::drawVLine(struct Shape s, byte ox, byte oy){
+  double rx0 = (4.0*(0))*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        );
+  double ry0 = (4.0*(0))*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        );
+  double rx1 = (4.0*(2))*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8));
+  double ry1 = (4.0*(2))*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8));
+
+  double x0 = rx0 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y0 = ry0 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double x1 = rx1 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  double y1 = ry1 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+
+  arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
+  arduboy.drawLine(ox + x1, oy + y1, ox + x0, oy + y0);
+}
+
+
 void Game::drawCircle(struct Shape s, byte ox, byte oy){
   arduboy.drawCircle(
     32 + 8*s.pos.r*scale*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
@@ -113,6 +177,16 @@ void Game::drawShape(struct Shape s, byte ox, byte oy){
     case CIRCLE:
       drawCircle(s, ox, oy);
       break;
+    case UTRI:
+      drawUtri(s, ox, oy);
+      break;
+    case DTRI:
+      drawDtri(s, ox, oy);
+      break;
+    case VLINE:
+      drawVLine(s, ox, oy);
+      break;
+
   }
 }
 
@@ -213,7 +287,10 @@ SceneID Game::run(){
     }else{
       switch(mode){
         case RECT: mode = CIRCLE; break;
-        case CIRCLE: mode = RECT; break;
+        case CIRCLE: mode = UTRI; break;
+        case UTRI: mode = DTRI; break;
+        case DTRI: mode = VLINE; break;
+        case VLINE: mode = RECT; break;
         case NONE: break;
       }
     }
@@ -229,7 +306,10 @@ SceneID Game::run(){
     }else{
       switch(mode){
         case RECT: mode = CIRCLE; break;
-        case CIRCLE: mode = RECT; break;
+        case CIRCLE: mode = UTRI; break;
+        case UTRI: mode = DTRI; break;
+        case DTRI: mode = VLINE; break;
+        case VLINE: mode = RECT; break;
         case NONE: break;
       }
     }

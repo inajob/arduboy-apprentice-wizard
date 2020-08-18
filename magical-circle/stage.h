@@ -1,4 +1,22 @@
 #include "ShapeType.h"
+#include <avr/pgmspace.h>
+
+const char stageTitle0[] PROGMEM = "SimpleCircle";
+const char stageTitle1[] PROGMEM = "SimpleRect";
+const char stageTitle2[] PROGMEM = "Sun";
+const char stageTitle3[] PROGMEM = "SimpleMagic";
+const char stageTitle4[] PROGMEM = "TwinForce";
+const char stageTitle5[] PROGMEM = "---";
+
+const char* const stageTitles[] PROGMEM = {
+  stageTitle0,
+  stageTitle1,
+  stageTitle2,
+  stageTitle3,
+  stageTitle4,
+  stageTitle5,
+};
+
 
 const byte stages[][10][4] PROGMEM = {
   { // simple circle

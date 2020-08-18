@@ -20,7 +20,7 @@ struct Shape {
 class Game : public Scene
 {
   public:
-  static const byte MAX_SHAPE=10;
+  static const byte MAX_SHAPE=32;
   struct Shape shapes[MAX_SHAPE];
   struct Shape exampleShapes[MAX_SHAPE];
   enum ShapeType mode = CIRCLE;
@@ -37,6 +37,9 @@ class Game : public Scene
   virtual void clear();
   virtual bool check();
   virtual void drawRect(struct Shape s, byte ox = 0, byte oy = 0);
+  virtual void drawUtri(struct Shape s, byte ox = 0, byte oy = 0);
+  virtual void drawDtri(struct Shape s, byte ox = 0, byte oy = 0);
+  virtual void drawVLine(struct Shape s, byte ox = 0, byte oy = 0);
   virtual void drawCircle(struct Shape s, byte ox = 0, byte oy = 0);
   virtual void drawShape(struct Shape s, byte ox = 0, byte oy = 0);
   virtual void gameDraw();

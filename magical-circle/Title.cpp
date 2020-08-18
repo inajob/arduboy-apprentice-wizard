@@ -14,7 +14,7 @@ SceneID Title::run(){
     }
   }
   if(arduboy.justPressed(DOWN_BUTTON)){
-    if(cursor < 0){
+    if(cursor < 2){
       cursor ++;
     }
   }
@@ -34,7 +34,9 @@ void Title::draw(){
   arduboy.print(F("BY @ina_ani"));
 
   arduboy.setCursor(8 ,9);
-  arduboy.print(F("ARCADE"));
+  arduboy.println(F("ARCADE"));
+  arduboy.println(F("TIME ATTACK"));
+  arduboy.println(F("PRACTICE"));
 
   arduboy.setCursor(0 ,9 + 9 * cursor);
   if(arduboy.everyXFrames(2)){
