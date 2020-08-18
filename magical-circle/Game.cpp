@@ -82,7 +82,7 @@ bool Game::check(){
   return true;
 }
 
-void Game::drawRect(struct Shape s, byte ox, byte oy){
+void Game::drawRect(struct Shape s, char ox, char oy){
   double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
@@ -106,7 +106,7 @@ void Game::drawRect(struct Shape s, byte ox, byte oy){
   arduboy.drawLine(ox + x2, oy + y2, ox + x3, oy + y3);
   arduboy.drawLine(ox + x3, oy + y3, ox + x0, oy + y0);
 }
-void Game::drawUtri(struct Shape s, byte ox, byte oy){
+void Game::drawUtri(struct Shape s, char ox, char oy){
   double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3))/sqrt(2);
@@ -125,7 +125,7 @@ void Game::drawUtri(struct Shape s, byte ox, byte oy){
   arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
   arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
 }
-void Game::drawDtri(struct Shape s, byte ox, byte oy){
+void Game::drawDtri(struct Shape s, char ox, char oy){
   double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8         + 1.0/3))/sqrt(2);
   double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8         + 1.0/3))/sqrt(2);
   double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3 + 1.0/3))/sqrt(2);
@@ -144,7 +144,7 @@ void Game::drawDtri(struct Shape s, byte ox, byte oy){
   arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
   arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
 }
-void Game::drawVLine(struct Shape s, byte ox, byte oy){
+void Game::drawVLine(struct Shape s, char ox, char oy){
   double rx0 = (4.0*(0))*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        );
   double ry0 = (4.0*(0))*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        );
   double rx1 = (4.0*(2))*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8));
@@ -160,14 +160,14 @@ void Game::drawVLine(struct Shape s, byte ox, byte oy){
 }
 
 
-void Game::drawCircle(struct Shape s, byte ox, byte oy){
+void Game::drawCircle(struct Shape s, char ox, char oy){
   arduboy.drawCircle(
     32 + 8*s.pos.r*scale*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
     32 + 8*s.pos.r*scale*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + oy,
     s.size * 4 * scale
   );
 }
-void Game::drawShape(struct Shape s, byte ox, byte oy){
+void Game::drawShape(struct Shape s, char ox, char oy){
   switch(s.type){
     case NONE:
       break;
@@ -216,7 +216,29 @@ void Game::drawCursor(uint8_t col){
   arduboy.fillCircle(32, 32 - 8*cursor.r, 1);
 }
 
-byte count = 0;
+void Game::drawShapeSelector(){
+  arduboy.fillRect(0, 16, 128, 32, BLACK);
+  arduboy.drawRect(0, 16, 128, 32);
+
+  struct Shape s;
+  s.pos.r = 0;
+  s.pos.theta = 0;
+  s.type = RECT;
+  s.size = 2;
+  drawShape(s, -16, 0);
+  s.type = CIRCLE;
+  drawShape(s, 8, 0);
+  s.type = UTRI;
+  drawShape(s, 32, 0);
+  s.type = DTRI;
+  drawShape(s, 56, 0);
+  s.type = VLINE;
+  drawShape(s, 56 + 24, 0);
+
+  if(count%2 == 0){
+    arduboy.drawRect(24*(mode - 1) + 4, 16+4, 24, 24);
+  }
+}
 
 void Game::init(){
   loadExample(0);
@@ -293,6 +315,12 @@ SceneID Game::run(){
         case VLINE: mode = RECT; break;
         case NONE: break;
       }
+      shapeSelectorTimer = 8;
+    }
+  }
+  if(arduboy.pressed(RIGHT_BUTTON)){
+    if(!arduboy.pressed(B_BUTTON)){
+      shapeSelectorTimer = 8;
     }
   }
   if(arduboy.justPressed(LEFT_BUTTON)){
@@ -305,16 +333,26 @@ SceneID Game::run(){
       anim = -1.0;
     }else{
       switch(mode){
-        case RECT: mode = CIRCLE; break;
-        case CIRCLE: mode = UTRI; break;
-        case UTRI: mode = DTRI; break;
-        case DTRI: mode = VLINE; break;
-        case VLINE: mode = RECT; break;
+        case RECT: mode = VLINE; break;
+        case VLINE: mode = DTRI; break;
+        case DTRI: mode = UTRI; break;
+        case UTRI: mode = CIRCLE; break;
+        case CIRCLE: mode = RECT; break;
         case NONE: break;
       }
+      shapeSelectorTimer = 8;
     }
   }
+  if(arduboy.pressed(LEFT_BUTTON)){
+    if(!arduboy.pressed(B_BUTTON)){
+      shapeSelectorTimer = 8;
+    }
+  }
+
   count ++;
+  if(shapeSelectorTimer > 0){
+    shapeSelectorTimer --;
+  }
 
   return STAY;
 }
@@ -325,5 +363,9 @@ void Game::draw(){
   gameDraw();
   if(count%2 == 0 && showCursor){
     drawCursor(WHITE);
+  }
+
+  if(shapeSelectorTimer > 0){
+    drawShapeSelector();
   }
 }
