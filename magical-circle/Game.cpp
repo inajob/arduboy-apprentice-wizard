@@ -222,7 +222,7 @@ void Game::drawShapeSelector(){
 
   struct Shape s;
   s.pos.r = 0;
-  s.pos.theta = 0;
+  s.pos.theta = cursor.theta;
   s.type = RECT;
   s.size = 2;
   drawShape(s, -16, 0);
