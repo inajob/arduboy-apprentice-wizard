@@ -258,11 +258,26 @@ SceneID Game::run(){
       clear();
     }else{
       // put shape
-      struct Shape* cur = &shapes[shapeIndex];
-      cur->type = mode;
-      cur->pos = cursor;
-      cur->size = size;
-      shapeIndex ++;
+      if(shapeIndex < MAX_SHAPE){
+        struct Shape* cur = &shapes[shapeIndex];
+        cur->type = mode;
+        cur->pos = cursor;
+        cur->size = size;
+
+        // check already draw the shape
+        bool hit = false;
+        for(byte i = 0; i < shapeIndex; i ++){
+          if(equalShape(*cur, shapes[i])){
+            hit = true;
+            break;
+          }
+        }
+        if(hit == false){
+          shapeIndex ++;
+        }else{
+          cur->type = NONE;
+        }
+      }
     }
   }
   if(arduboy.justPressed(B_BUTTON)){

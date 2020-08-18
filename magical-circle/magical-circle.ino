@@ -16,14 +16,13 @@ void setup(){
   arduboy.begin();
   arduboy.setFrameRate(30);
 
-  title.init();
-  ready.init();
   game.init();
+  title.init(&game);
+  ready.init();
   clear.init(&game);
   scene = &title;
 
 }
-
 
 void loop(){
   if(!arduboy.nextFrame()){return;}

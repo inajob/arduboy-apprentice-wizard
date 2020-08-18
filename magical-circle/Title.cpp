@@ -1,11 +1,13 @@
 #include "Title.h"
 
-void Title::init(){
+void Title::init(Game *pgame){
+  game = pgame;
   cursor = 0;
 }
 
 SceneID Title::run(){
   if(arduboy.justPressed(A_BUTTON)){
+    game->loadExample(game->stage);
     return READY;
   }
   if(arduboy.justPressed(UP_BUTTON)){
@@ -19,8 +21,10 @@ SceneID Title::run(){
     }
   }
   if(arduboy.justPressed(LEFT_BUTTON)){
+    if(game->stage > 0) game->stage --;
   }
   if(arduboy.justPressed(RIGHT_BUTTON)){
+    game->stage ++;
   }
   return STAY;
 }
@@ -34,8 +38,11 @@ void Title::draw(){
   arduboy.print(F("BY @ina_ani"));
 
   arduboy.setCursor(8 ,9);
-  arduboy.println(F("ARCADE"));
+  arduboy.print(F("ARCADE "));
+  arduboy.println(game->stage + 1);
+  arduboy.setCursor(8 ,18);
   arduboy.println(F("TIME ATTACK"));
+  arduboy.setCursor(8 ,27);
   arduboy.println(F("PRACTICE"));
 
   arduboy.setCursor(0 ,9 + 9 * cursor);
