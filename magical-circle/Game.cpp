@@ -5,13 +5,21 @@ void Game::loadExample(byte n){
   cursor.r = 0;
   cursor.theta = 0;
   size = 4;
+
+  byte* stage = stages[n];
+
   for(byte i = 0; i < MAX_SHAPE; i ++){
-    if(i >= 10) break; // TODO
+      exampleShapes[i].type = NONE;
+  }
+  for(byte i = 0; i < MAX_SHAPE; i ++){
     struct Shape s;
-    s.pos.r = pgm_read_byte_near(&stages[n][i][0]);
-    s.pos.theta = pgm_read_byte_near(&stages[n][i][1]);
-    s.type = pgm_read_byte_near(&stages[n][i][2]);
-    s.size = pgm_read_byte_near(&stages[n][i][3]);
+    s.pos.r =     pgm_read_byte(stage + i*4);
+    s.pos.theta = pgm_read_byte(stage + i*4 + 1);
+    s.type =      pgm_read_byte(stage + i*4 + 2);
+    s.size =      pgm_read_byte(stage + i*4 + 3);
+    if(s.type == NONE){
+      break;
+    }
     exampleShapes[i] = s;
   }
 }

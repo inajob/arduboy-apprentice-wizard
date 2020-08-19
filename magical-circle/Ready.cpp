@@ -1,5 +1,31 @@
 #include "Ready.h"
-#include "stage.h"
+
+const char stageTitle0[] PROGMEM = "SimpleCircle";
+const char stageTitle1[] PROGMEM = "SimpleRect";
+const char stageTitle2[] PROGMEM = "SunLight";
+const char stageTitle3[] PROGMEM = "SimpleMagic";
+const char stageTitle4[] PROGMEM = "TwinForce";
+const char stageTitle5[] PROGMEM = "HolyHex";
+const char stageTitle6[] PROGMEM = "LunaPower";
+const char stageTitle7[] PROGMEM = "TwinElement";
+const char stageTitle8[] PROGMEM = "Sharpness";
+const char stageTitle9[] PROGMEM = "SunEnergy";
+const char stageTitle10[] PROGMEM = "---";
+
+const char* const stageTitles[] PROGMEM = {
+  stageTitle0,
+  stageTitle1,
+  stageTitle2,
+  stageTitle3,
+  stageTitle4,
+  stageTitle5,
+  stageTitle6,
+  stageTitle7,
+  stageTitle8,
+  stageTitle9,
+  stageTitle10,
+};
+
 
 void Ready::init(){
   counter = 100;
