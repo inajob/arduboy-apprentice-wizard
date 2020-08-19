@@ -201,9 +201,14 @@ void Game::drawShape(struct Shape s, char ox, char oy){
 void Game::gameDraw(){
   for(byte i = 0; i < MAX_SHAPE; i ++){
     drawShape(shapes[i]);
-    drawShape(exampleShapes[i], 64, 0);
+    if(!isPractice){
+      drawShape(exampleShapes[i], 64, 0);
+    }
   }
-  arduboy.setCursor(0,0);
+  if(isPractice){
+    arduboy.setCursor(64+16,0);
+    arduboy.println(F("PRACTICE"));
+  }
 }
 
 void Game::drawCursor(uint8_t col){
@@ -257,13 +262,16 @@ SceneID Game::run(){
     anim = (abs(anim) - 0.1)*(anim/abs(anim));
   }
 
-  if(check()){
+  if(!isPractice && check()){
     return CLEAR;
   }
 
   if(arduboy.justPressed(A_BUTTON)){
     if(arduboy.pressed(B_BUTTON)){
       clear();
+      if(isPractice){
+        return TITLE;
+      }
     }else{
       // put shape
       if(shapeIndex < MAX_SHAPE){

@@ -2,7 +2,7 @@
 
 void Title::init(Game *pgame){
   game = pgame;
-  game->loadExample(7);
+  game->loadExample(random(10));
   cursor = 0;
 }
 
@@ -10,7 +10,20 @@ SceneID Title::run(){
   if(arduboy.justPressed(A_BUTTON)){
     game->loadExample(game->stage);
     game->anim = 0;
-    return READY;
+    switch(cursor){
+      case 0:
+        game->isPractice = false;
+        return GAME;
+        break;
+      case 1:
+        // not implement
+        break;
+      case 2:
+        game->isPractice = true;
+        return GAME;
+        break;
+    }
+    return STAY;
   }
   if(arduboy.justPressed(UP_BUTTON)){
     if(cursor > 0){

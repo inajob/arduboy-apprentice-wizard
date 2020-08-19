@@ -36,6 +36,7 @@ void loop(){
       arduboy.display();
       break;
     case TITLE:
+      title.init(&game);
       scene = &title;
       break;
     case READY:
