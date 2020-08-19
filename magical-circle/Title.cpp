@@ -22,6 +22,9 @@ SceneID Title::run(){
         game->isPractice = true;
         return GAME;
         break;
+      case 3:
+        game->isJP = !game->isJP;
+        break;
     }
     return STAY;
   }
@@ -31,7 +34,7 @@ SceneID Title::run(){
     }
   }
   if(arduboy.justPressed(DOWN_BUTTON)){
-    if(cursor < 2){
+    if(cursor < 3){
       cursor ++;
     }
   }
@@ -65,6 +68,10 @@ void Title::draw(){
   arduboy.println(F("Time Attack"));
   arduboy.setCursor(8 ,9*4);
   arduboy.println(F("Practice"));
+  arduboy.setCursor(8 ,9*5);
+  arduboy.print(F("Language: "));
+  if(game->isJP){arduboy.println("JP");}else{arduboy.println("EN");}
+
 
   arduboy.setCursor(0 ,18 + 9 * cursor);
   if(arduboy.everyXFrames(2)){

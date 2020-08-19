@@ -35,6 +35,7 @@ class Game : public Scene
   bool showShapeSelector = false;
   byte shapeSelectorTimer = 0;
   bool isPractice = false;
+  bool isJP = false;
 
   virtual void loadExample(byte n);
   virtual bool equalShape(struct Shape s1, struct Shape s2);
