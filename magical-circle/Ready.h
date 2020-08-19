@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Game.h"
 
 #ifndef Ready_h
 #define Ready_h
@@ -9,7 +10,9 @@ class Ready : public Scene
   public:
   int counter;
   int stage;
-  virtual void init();
+  Game* game;
+  void init(Game *pgame);
+  virtual void init(){}; // WARNING: not use default init()
   virtual SceneID run();
   virtual void draw();
 };
