@@ -11,6 +11,9 @@ SceneID Clear::run(){
     game->scale = 1;
     game->clear();
     game->stage ++;
+    if(game->stage == 10){
+      return ALLCLEAR;
+    }
     game->loadExample(game->stage);
     game->showCursor = true;
     count = 0;

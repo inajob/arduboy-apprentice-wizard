@@ -9,7 +9,7 @@ TITLE,
 READY,
 GAME,
 CLEAR,
-HINT
+ALLCLEAR
 };
 
 class Scene

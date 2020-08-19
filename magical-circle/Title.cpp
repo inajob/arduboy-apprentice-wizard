@@ -18,6 +18,9 @@ SceneID Title::run(){
         break;
       case 1:
         // not implement
+        game->loadExample(game->stage);
+        game->isTimeAttack = true;
+        return GAME;
         break;
       case 2:
         game->isPractice = true;
@@ -44,6 +47,9 @@ SceneID Title::run(){
   }
   if(arduboy.justPressed(RIGHT_BUTTON)){
     game->stage ++;
+    if(game->stage == 10){
+      game->stage--;
+    }
   }
   game->anim += 0.1;
   return STAY;
@@ -65,6 +71,7 @@ void Title::draw(){
   if(game->isJP){
     arduboy.setCursor(0,0);
     drawText(0,0,jpTitle,sizeof(jpTitle));
+    arduboy.drawLine(0,9,100,9);
 
     arduboy.setCursor(48,9 + 9 * 5);
     arduboy.print(F("by @ina_ani"));

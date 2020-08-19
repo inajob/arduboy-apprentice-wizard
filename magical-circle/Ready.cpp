@@ -153,7 +153,7 @@ void Ready::draw(){
         arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
         break;
       default:
-        arduboy.println(F("NOTHING TO TEACH..."));
+        arduboy.println(F(" NOTHING TO TEACH..."));
         arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
         break;
     }

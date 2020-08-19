@@ -381,6 +381,9 @@ SceneID Game::run(){
   }
 
   count ++;
+  if(isTimeAttack){
+    timer ++;
+  }
   if(shapeSelectorTimer > 0){
     shapeSelectorTimer --;
   }
@@ -396,6 +399,10 @@ void Game::draw(){
     drawCursor(WHITE);
   }
 
+  if(isTimeAttack){
+    arduboy.setCursor(1, 63-8);
+    arduboy.print(timer);
+  }
   if(shapeSelectorTimer > 0){
     drawShapeSelector();
   }

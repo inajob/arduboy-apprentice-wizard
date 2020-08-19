@@ -3,6 +3,7 @@
 #include "Title.h"
 #include "Ready.h"
 #include "Clear.h"
+#include "AllClear.h"
 #include "misaki_font.h"
 
 Scene* scene;
@@ -11,6 +12,7 @@ Title title;
 Ready ready;
 Game game;
 Clear clear;
+AllClear allClear;
 Arduboy2 arduboy;
 
 void setup(){
@@ -21,6 +23,7 @@ void setup(){
   title.init(&game);
   ready.init(&game);
   clear.init(&game);
+  allClear.init(&game);
   scene = &title;
 
 }
@@ -124,6 +127,9 @@ void loop(){
       break;
     case CLEAR:
       scene = &clear;
+      break;
+    case ALLCLEAR:
+      scene = &allClear;
       break;
   }
 }
