@@ -11,7 +11,7 @@ SceneID Clear::run(){
     game->scale = 1;
     game->clear();
     game->stage ++;
-    if(game->stage == 10){
+    if(game->stage == game->MAX_STAGE){
       return ALLCLEAR;
     }
     game->loadExample(game->stage);

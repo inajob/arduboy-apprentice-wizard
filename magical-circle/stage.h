@@ -92,6 +92,59 @@ const byte dataSunEnergy[] PROGMEM = {
 3,7,VLINE, 1,
 0,0,NONE, 0,
 };
+const byte dataFace[] PROGMEM = {
+0,0,CIRCLE, 8,
+1,1,CIRCLE, 1,
+1,7,CIRCLE, 1,
+2,1,CIRCLE, 3,
+2,7,CIRCLE, 3,
+2,4,  RECT, 2,
+0,0,  UTRI, 1,
+0,0,NONE, 0,
+};
+const byte dataSquareFlower[] PROGMEM = {
+0,0,CIRCLE, 8,
+0,0,  RECT, 2,
+0,0,  RECT, 3,
+0,0,  RECT, 5,
+3,0,  RECT, 1,
+3,0,  RECT, 2,
+0,2,  RECT, 5,
+3,1,  RECT, 1,
+3,1,  RECT, 2,
+3,2,  RECT, 1,
+3,2,  RECT, 2,
+3,3,  RECT, 1,
+3,3,  RECT, 2,
+3,4,  RECT, 1,
+3,4,  RECT, 2,
+3,5,  RECT, 1,
+3,5,  RECT, 2,
+3,6,  RECT, 1,
+3,6,  RECT, 2,
+3,7,  RECT, 1,
+3,7,  RECT, 2,
+0,0,NONE, 0,
+};
+
+const byte dataTriplePower[] PROGMEM = {
+0,0,CIRCLE, 8,
+0,0,CIRCLE, 7,
+2,0,CIRCLE, 3,
+2,0,CIRCLE, 4,
+2,0,  DTRI, 2,
+2,0,  UTRI, 2,
+2,3,CIRCLE, 3,
+2,3,CIRCLE, 2,
+1,3, VLINE, 1,
+2,3, VLINE, 1,
+2,5,CIRCLE, 3,
+2,5,  RECT, 2,
+1,5, VLINE, 1,
+2,5, VLINE, 1,
+0,0,NONE, 0,
+};
+
 
 byte* stages[] = {
   dataSimpleCircle,
@@ -104,6 +157,9 @@ byte* stages[] = {
   dataTwinElement,
   dataSharpness,
   dataSunEnergy,
+  dataFace,
+  dataSquareFlower,
+  dataTriplePower,
 };
 
 #endif

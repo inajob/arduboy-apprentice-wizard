@@ -3,7 +3,7 @@
 
 void Title::init(Game *pgame){
   game = pgame;
-  game->loadExample(random(10));
+  game->loadExample(random(game->MAX_STAGE));
   cursor = 0;
 }
 
@@ -14,11 +14,13 @@ SceneID Title::run(){
       case 0:
         game->loadExample(game->stage);
         game->isPractice = false;
+        game->isTimeAttack = false;
         return READY;
         break;
       case 1:
         // not implement
         game->loadExample(game->stage);
+        game->isPractice = false;
         game->isTimeAttack = true;
         return GAME;
         break;
@@ -47,7 +49,7 @@ SceneID Title::run(){
   }
   if(arduboy.justPressed(RIGHT_BUTTON)){
     game->stage ++;
-    if(game->stage == 10){
+    if(game->stage == game->MAX_STAGE){
       game->stage--;
     }
   }

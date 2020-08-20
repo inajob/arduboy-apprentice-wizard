@@ -25,6 +25,11 @@ void Game::loadExample(byte n){
 }
 
 bool Game::equalShape(struct Shape s1, struct Shape s2){
+  if(s1.type == UTRI && s2.type == DTRI || s1.type == DTRI && s2.type == UTRI){
+    if(s1.pos.r == 0 && s2.pos.r == 0 && s1.size == s2.size){
+      return (s1.pos.theta+4)%8 == s2.pos.theta;
+    }
+  }
   if(s1.type != s2.type){return false;}
   switch(s1.type){
     case NONE:
