@@ -17,6 +17,9 @@ const char stageTitle9[] PROGMEM = "SunEnergy";
 const char stageTitle10[] PROGMEM = "Face";
 const char stageTitle11[] PROGMEM = "SquarFlower";
 const char stageTitle12[] PROGMEM = "TriplePower";
+const char stageTitle13[] PROGMEM = "Shuriken";
+const char stageTitle14[] PROGMEM = "HolyPort";
+const char stageTitle15[] PROGMEM = "BigShield";
 
 const char* const stageTitles[] PROGMEM = {
   stageTitle0,
@@ -32,6 +35,9 @@ const char* const stageTitles[] PROGMEM = {
   stageTitle10,
   stageTitle11,
   stageTitle12,
+  stageTitle13,
+  stageTitle14,
+  stageTitle15,
 };
 
 

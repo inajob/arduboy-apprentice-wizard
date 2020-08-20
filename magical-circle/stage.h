@@ -145,6 +145,56 @@ const byte dataTriplePower[] PROGMEM = {
 0,0,NONE, 0,
 };
 
+const byte dataShuriken[] PROGMEM = {
+0,0,  RECT, 8,
+0,0,CIRCLE, 3,
+1,0,  UTRI, 1,
+2,0,  UTRI, 2,
+3,0,  UTRI, 3,
+1,2,  UTRI, 1,
+2,2,  UTRI, 2,
+3,2,  UTRI, 3,
+1,4,  UTRI, 1,
+2,4,  UTRI, 2,
+3,4,  UTRI, 3,
+1,6,  UTRI, 1,
+2,6,  UTRI, 2,
+3,6,  UTRI, 3,
+0,0,NONE, 0,
+};
+const byte dataHolyPort[] PROGMEM = {
+0,0,CIRCLE, 8,
+0,0,CIRCLE, 6,
+0,0,CIRCLE, 3,
+2,1,  UTRI, 1,
+2,3,  UTRI, 1,
+2,5,  UTRI, 1,
+2,7,  UTRI, 1,
+0,0,  UTRI, 2,
+0,0,  DTRI, 2,
+3,1, VLINE, 1,
+3,3, VLINE, 1,
+3,5, VLINE, 1,
+3,7, VLINE, 1,
+0,0,NONE, 0,
+};
+const byte dataBigShield[] PROGMEM = {
+3,0,  UTRI, 8,
+3,4,  UTRI, 8,
+3,0,CIRCLE, 2,
+3,0,CIRCLE, 3,
+3,0,CIRCLE, 2,
+3,2,CIRCLE, 2,
+3,2,  RECT, 1,
+3,4,CIRCLE, 3,
+3,4,  RECT, 1,
+3,4,  RECT, 2,
+3,6,CIRCLE, 2,
+3,6,  RECT, 1,
+0,0,NONE, 0,
+};
+
+
 
 byte* stages[] = {
   dataSimpleCircle,
@@ -160,6 +210,9 @@ byte* stages[] = {
   dataFace,
   dataSquareFlower,
   dataTriplePower,
+  dataShuriken,
+  dataHolyPort,
+  dataBigShield,
 };
 
 #endif

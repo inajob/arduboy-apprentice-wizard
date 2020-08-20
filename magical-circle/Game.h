@@ -21,7 +21,7 @@ class Game : public Scene
 {
   public:
   static const byte MAX_SHAPE=32;
-  static const byte MAX_STAGE=13;
+  static const byte MAX_STAGE=16;
   struct Shape shapes[MAX_SHAPE];
   struct Shape exampleShapes[MAX_SHAPE];
   enum ShapeType mode = CIRCLE;
