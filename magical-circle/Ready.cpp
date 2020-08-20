@@ -1,6 +1,9 @@
 #include "Ready.h"
 #include "misaki_font.h"
 
+#include "ArduboyTones.h"
+extern ArduboyTones sound;
+
 const char stageTitle0[] PROGMEM = "SimpleCircle";
 const char stageTitle1[] PROGMEM = "SimpleRect";
 const char stageTitle2[] PROGMEM = "SunLight";
@@ -39,6 +42,7 @@ void Ready::init(Game* pgame){
 
 SceneID Ready::run(){
   if(arduboy.justPressed(A_BUTTON)){
+    sound.tone(880, 100);
     return GAME;
   }
   if(arduboy.justPressed(UP_BUTTON)){

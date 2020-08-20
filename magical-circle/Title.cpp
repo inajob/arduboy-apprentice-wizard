@@ -1,5 +1,8 @@
 #include "Title.h"
 #include "misaki_font.h"
+#include "ArduboyTones.h"
+
+extern ArduboyTones sound;
 
 void Title::init(Game *pgame){
   game = pgame;
@@ -15,21 +18,24 @@ SceneID Title::run(){
         game->loadExample(game->stage);
         game->isPractice = false;
         game->isTimeAttack = false;
+        sound.tone(880, 100);
         return READY;
         break;
       case 1:
-        // not implement
         game->loadExample(game->stage);
         game->isPractice = false;
         game->isTimeAttack = true;
+        sound.tone(880, 100);
         return GAME;
         break;
       case 2:
         game->isPractice = true;
+        sound.tone(880, 100);
         return GAME;
         break;
       case 3:
         game->isJP = !game->isJP;
+        sound.tone(880, 100);
         break;
     }
     return STAY;
@@ -37,11 +43,13 @@ SceneID Title::run(){
   if(arduboy.justPressed(UP_BUTTON)){
     if(cursor > 0){
       cursor --;
+      sound.tone(440, 50);
     }
   }
   if(arduboy.justPressed(DOWN_BUTTON)){
     if(cursor < 3){
       cursor ++;
+      sound.tone(440, 50);
     }
   }
   if(arduboy.justPressed(LEFT_BUTTON)){

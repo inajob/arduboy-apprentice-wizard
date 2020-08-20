@@ -5,6 +5,9 @@
 #include "Clear.h"
 #include "AllClear.h"
 #include "misaki_font.h"
+#include <ArduboyTones.h>
+
+ArduboyTones sound(arduboy.audio.enabled);
 
 Scene* scene;
 

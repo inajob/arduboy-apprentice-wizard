@@ -1,5 +1,8 @@
 #include "Game.h"
 #include "stage.h"
+#include "ArduboyTones.h"
+
+extern ArduboyTones sound;
 
 void Game::loadExample(byte n){
   cursor.r = 0;
@@ -268,11 +271,13 @@ SceneID Game::run(){
   }
 
   if(!isPractice && check()){
+    sound.tone(NOTE_C5, 200, NOTE_C6, 200, NOTE_C7, 400);
     return CLEAR;
   }
 
   if(arduboy.justPressed(A_BUTTON)){
     if(arduboy.pressed(B_BUTTON)){
+      sound.tone(880, 100, 440, 100, 220, 100);
       clear();
       if(isPractice){
         return TITLE;
@@ -294,6 +299,7 @@ SceneID Game::run(){
           }
         }
         if(hit == false){
+          sound.tone(880, 100);
           shapeIndex ++;
         }else{
           cur->type = NONE;
@@ -311,12 +317,14 @@ SceneID Game::run(){
       }else{
         cursor.r ++;
       }
+      sound.tone(220, 25, 440, 25);
     }else{
       if(size == 8){
         size = 1;
       }else{
         size ++;
       }
+      sound.tone(440, 50);
     }
   }
   if(arduboy.justPressed(DOWN_BUTTON)){
@@ -326,12 +334,14 @@ SceneID Game::run(){
       }else{
         cursor.r --;
       }
+      sound.tone(440, 25, 220, 25);
     }else{
       if(size == 1){
         size = 8;
       }else{
         size --;
       }
+      sound.tone(440, 50);
     }
   }
   if(arduboy.justPressed(RIGHT_BUTTON)){
@@ -342,6 +352,7 @@ SceneID Game::run(){
         cursor.theta --;
       }
       anim = 1.0;
+      sound.tone(440, 25, 220, 25);
     }else{
       switch(mode){
         case RECT: mode = CIRCLE; break;
@@ -352,11 +363,13 @@ SceneID Game::run(){
         case NONE: break;
       }
       shapeSelectorTimer = 8;
+      sound.tone(440, 50);
     }
   }
   if(arduboy.pressed(RIGHT_BUTTON)){
     if(!arduboy.pressed(B_BUTTON)){
       shapeSelectorTimer = 8;
+      sound.tone(440, 50);
     }
   }
   if(arduboy.justPressed(LEFT_BUTTON)){
@@ -367,6 +380,7 @@ SceneID Game::run(){
         cursor.theta ++;
       }
       anim = -1.0;
+      sound.tone(220, 25, 440, 25);
     }else{
       switch(mode){
         case RECT: mode = VLINE; break;
@@ -377,11 +391,13 @@ SceneID Game::run(){
         case NONE: break;
       }
       shapeSelectorTimer = 8;
+      sound.tone(440, 50);
     }
   }
   if(arduboy.pressed(LEFT_BUTTON)){
     if(!arduboy.pressed(B_BUTTON)){
       shapeSelectorTimer = 8;
+      sound.tone(440, 50);
     }
   }
 

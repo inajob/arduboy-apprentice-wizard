@@ -1,4 +1,6 @@
 #include "Clear.h"
+#include "ArduboyTones.h"
+extern ArduboyTones sound;
 
 void Clear::init(Game *pgame){
   game = pgame;
@@ -17,6 +19,7 @@ SceneID Clear::run(){
     game->loadExample(game->stage);
     game->showCursor = true;
     count = 0;
+    sound.tone(880, 100);
     return READY;
   }
   if(arduboy.justPressed(UP_BUTTON)){
