@@ -53,13 +53,15 @@ SceneID Title::run(){
     }
   }
   if(arduboy.justPressed(LEFT_BUTTON)){
-    if(game->stage > 0) game->stage --;
+    //if(game->stage > 0) game->stage --;
   }
   if(arduboy.justPressed(RIGHT_BUTTON)){
+    /*
     game->stage ++;
     if(game->stage == game->MAX_STAGE){
       game->stage--;
     }
+    */
   }
   game->anim += 0.1;
   return STAY;
@@ -89,7 +91,7 @@ void Title::draw(){
     arduboy.setCursor(8 ,9*2);
     drawText(8, 9*2, jpArcade, sizeof(jpArcade));
     arduboy.setCursor(50,9*2);
-    arduboy.println(game->stage + 1);
+    //arduboy.println(game->stage + 1);
     arduboy.setCursor(8 ,9*3);
     drawText(8, 9*3, jpTimeAttack, sizeof(jpTimeAttack));
     arduboy.setCursor(8 ,9*4);
@@ -107,7 +109,7 @@ void Title::draw(){
 
     arduboy.setCursor(8 ,9*2);
     arduboy.print(F("Arcade "));
-    arduboy.println(game->stage + 1);
+    //arduboy.println(game->stage + 1);
     arduboy.setCursor(8 ,9*3);
     arduboy.println(F("Time Attack"));
     arduboy.setCursor(8 ,9*4);
