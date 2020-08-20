@@ -15,7 +15,7 @@ Support langage is English and Japanse.
 
 # Screenshot
 
-![screenshot](./imgs/screenshot.jpg)
+![screenshot](./imgs/screenshot1.jpg)
 ![screenshot2](./imgs/screenshot2.jpg)
 ![screenshot3](./imgs/screenshot3.jpg)
 
