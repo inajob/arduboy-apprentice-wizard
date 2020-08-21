@@ -18,6 +18,7 @@ SceneID Title::run(){
         game->loadExample(game->stage);
         game->isPractice = false;
         game->isTimeAttack = false;
+        game->mode = CIRCLE;
         sound.tone(880, 100);
         return READY;
         break;
@@ -25,11 +26,13 @@ SceneID Title::run(){
         game->loadExample(game->stage);
         game->isPractice = false;
         game->isTimeAttack = true;
+        game->mode = CIRCLE;
         sound.tone(880, 100);
         return GAME;
         break;
       case 2:
         game->isPractice = true;
+        game->mode = CIRCLE;
         sound.tone(880, 100);
         return GAME;
         break;
@@ -70,7 +73,7 @@ SceneID Title::run(){
 PROGMEM const uint8_t jpTitle[] = { 0xf0, 0x81,0x6c,0x8b,0x46, 0xf1, 0x00, 0xf0, 0x80,0x7d,0x48,0x66,0x4d,0x46};
 PROGMEM const uint8_t jpArcade[] = { 0xf0, 0x97,0xee,0xa6,0xee,0xbe};
 PROGMEM const uint8_t jpTimeAttack[] = { 0xf0, 0xb4,0x99,0xd5,0x97,0xb4,0xb8,0xa4};
-PROGMEM const uint8_t jpPractice[] = { 0xf0, 0x8e,0x95,0x59,0x87,0x48};
+PROGMEM const uint8_t jpPractice[] = { 0xf0, 0x4c,0x4a,0x4d,0x4f, };
 PROGMEM const uint8_t jpLanguage[] = { 0xf0, 0x54,0x95,0x56};
 
 void Title::draw(){
@@ -113,7 +116,7 @@ void Title::draw(){
     arduboy.setCursor(8 ,9*3);
     arduboy.println(F("Time Attack"));
     arduboy.setCursor(8 ,9*4);
-    arduboy.println(F("Practice"));
+    arduboy.println(F("Sketch"));
     arduboy.setCursor(8 ,9*5);
     arduboy.print(F("Language: "));
     if(game->isJP){arduboy.println("JP");}else{arduboy.println("EN");}
