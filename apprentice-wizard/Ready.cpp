@@ -94,12 +94,11 @@ void Ready::draw(){
   arduboy.println(buf);
   //arduboy.println(counter);
 
-  arduboy.setCursor(0,16);
   if(game->isJP){
+    arduboy.setCursor(0, 16 + 8*1);
     switch(stage){
       case 0:
         drawText(8, 16, jpInstruction1, sizeof(jpInstruction1));
-        arduboy.setCursor(0, 16 + 8*1);
         arduboy.println("  \x18  :");
         drawText(8*5, 16 + 8, jpBigger, sizeof(jpBigger));
         arduboy.println("  \x19  :");
@@ -108,68 +107,57 @@ void Ready::draw(){
         drawText(8*5, 16 + 8*3, jpDrawShape, sizeof(jpDrawShape));
         arduboy.println("  B+A:");
         drawText(8*5, 16 + 8*4, jpReset, sizeof(jpReset));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
         break;
       case 1:
         drawText(8, 16, jpInstruction2, sizeof(jpInstruction2));
-        arduboy.setCursor(0, 16 + 8*1);
         arduboy.println(F("  \x1B,\x1A :"));
         drawText(8*5, 16 + 8, jpChangeShape, sizeof(jpChangeShape));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
         break;
       case 2:
       case 3:
         drawText(8, 16, jpInstruction3, sizeof(jpInstruction3));
-        arduboy.setCursor(0, 16 + 8*1);
         arduboy.println(F("  B+\x1B,\x1A :"));
         drawText(8*6, 16 + 8, jpRotate, sizeof(jpRotate));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
         break;
       case 4:
         drawText(8, 16, jpInstruction4, sizeof(jpInstruction4));
-        arduboy.setCursor(0, 16 + 8*1);
         arduboy.println(F("  B+\x18 :"));
         drawText(8*5, 16 + 8, jpMoveUp, sizeof(jpMoveUp));
         arduboy.println(F("  B+\x18 :"));
         drawText(8*5, 16 + 8*2, jpMoveDown, sizeof(jpMoveDown));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
         break;
       default:
         drawText(8, 16, jpNoInstruction, sizeof(jpNoInstruction));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
         break;
     }
   }else{
+    arduboy.setCursor(6*2,16);
     switch(stage){
       case 0:
-        arduboy.println(F(" --INSTRUCTION1--"));
-        arduboy.println(F("  \x18   :BIGGER"));
-        arduboy.println(F("  \x19   :SMALLER"));
-        arduboy.println(F("  A   :DRAW SHAPE"));
-        arduboy.println(F("  B+A :RESET"));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
+        arduboy.println(F("- LESSON 1 -"));
+        arduboy.println(F("  \x18 \x19 : Change size"));
+        arduboy.println(F("  A   : Draw shape"));
+        arduboy.println(F("  B+A : Reset"));
         break;
       case 1:
-        arduboy.println(F(" --INSTRUCTION2--"));
-        arduboy.println(F("  \x1B,\x1A :CHANGE SHAPE"));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
+        arduboy.println(F("- LESSON 2 -"));
+        arduboy.println(F("  \x1B \x1A : Change shape"));
         break;
       case 2:
       case 3:
-        arduboy.println(F(" --INSTRUCTION3--"));
-        arduboy.println(F("  B+\x1B,\x1A :ROTATE"));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
+        arduboy.println(F("- LESSON 3 -"));
+        arduboy.println(F("  B+\x1B,\x1A : Rotate"));
         break;
       case 4:
-        arduboy.println(F(" --INSTRUCTION4--"));
-        arduboy.println(F("  B+\x18 :MOVE UP"));
-        arduboy.println(F("  B+\x19 :MOVE DOWN"));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
+        arduboy.println(F("- LESSON 4 -"));
+        arduboy.println(F("  B+\x18 : Move up"));
+        arduboy.println(F("  B+\x19 : Move down"));
         break;
       default:
-        arduboy.println(F(" NOTHING TO TEACH..."));
-        arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
+        arduboy.println(F("Nothing to teach..."));
         break;
     }
   }
+  // Draw text box
+  arduboy.drawRect(4,16-2, 128 - 8, 8*5+3);
 }
