@@ -37,19 +37,19 @@ class Game : public Scene
   byte shapeSelectorTimer = 0;
   bool isPractice = false;
   bool isJP = false;
-  unsigned int timer = 0;
+  uint16_t timer = 0;
   bool isTimeAttack = false;
 
   virtual void loadExample(byte n);
   virtual bool equalShape(struct Shape s1, struct Shape s2);
   virtual void clear();
   virtual bool check();
-  virtual void drawRect(struct Shape s, char ox = 0, char oy = 0);
-  virtual void drawUtri(struct Shape s, char ox = 0, char oy = 0);
-  virtual void drawDtri(struct Shape s, char ox = 0, char oy = 0);
-  virtual void drawVLine(struct Shape s, char ox = 0, char oy = 0);
-  virtual void drawCircle(struct Shape s, char ox = 0, char oy = 0);
-  virtual void drawShape(struct Shape s, char ox = 0, char oy = 0);
+  virtual void drawRect(struct Shape s, int8_t ox = 0, int8_t oy = 0);
+  virtual void drawUtri(struct Shape s, int8_t ox = 0, int8_t oy = 0);
+  virtual void drawDtri(struct Shape s, int8_t ox = 0, int8_t oy = 0);
+  virtual void drawVLine(struct Shape s, int8_t ox = 0, int8_t oy = 0);
+  virtual void drawCircle(struct Shape s, int8_t ox = 0, int8_t oy = 0);
+  virtual void drawShape(struct Shape s, int8_t ox = 0, int8_t oy = 0);
   virtual void drawShapeSelector();
   virtual void gameDraw();
   virtual void drawCursor(uint8_t col);

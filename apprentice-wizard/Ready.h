@@ -8,8 +8,8 @@ extern Arduboy2 arduboy;
 class Ready : public Scene
 {
   public:
-  int counter;
-  int stage;
+  uint8_t counter;
+  uint8_t stage;
   Game* game;
   void init(Game *pgame);
   virtual void init(){}; // WARNING: not use default init()

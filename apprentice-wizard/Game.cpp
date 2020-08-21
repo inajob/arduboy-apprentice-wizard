@@ -98,7 +98,7 @@ bool Game::check(){
   return true;
 }
 
-void Game::drawRect(struct Shape s, char ox, char oy){
+void Game::drawRect(struct Shape s, int8_t ox, int8_t oy){
   double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
@@ -122,7 +122,7 @@ void Game::drawRect(struct Shape s, char ox, char oy){
   arduboy.drawLine(ox + x2, oy + y2, ox + x3, oy + y3);
   arduboy.drawLine(ox + x3, oy + y3, ox + x0, oy + y0);
 }
-void Game::drawUtri(struct Shape s, char ox, char oy){
+void Game::drawUtri(struct Shape s, int8_t ox, int8_t oy){
   double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
   double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3))/sqrt(2);
@@ -141,7 +141,7 @@ void Game::drawUtri(struct Shape s, char ox, char oy){
   arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
   arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
 }
-void Game::drawDtri(struct Shape s, char ox, char oy){
+void Game::drawDtri(struct Shape s, int8_t ox, int8_t oy){
   double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8         + 1.0/3))/sqrt(2);
   double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8         + 1.0/3))/sqrt(2);
   double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3 + 1.0/3))/sqrt(2);
@@ -160,7 +160,7 @@ void Game::drawDtri(struct Shape s, char ox, char oy){
   arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
   arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
 }
-void Game::drawVLine(struct Shape s, char ox, char oy){
+void Game::drawVLine(struct Shape s, int8_t ox, int8_t oy){
   double rx0 = (4.0*(0))*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        );
   double ry0 = (4.0*(0))*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        );
   double rx1 = (4.0*(2))*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8));
@@ -176,14 +176,14 @@ void Game::drawVLine(struct Shape s, char ox, char oy){
 }
 
 
-void Game::drawCircle(struct Shape s, char ox, char oy){
+void Game::drawCircle(struct Shape s, int8_t ox, int8_t oy){
   arduboy.drawCircle(
     32 + 8*s.pos.r*scale*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
     32 + 8*s.pos.r*scale*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + oy,
     s.size * 4 * scale
   );
 }
-void Game::drawShape(struct Shape s, char ox, char oy){
+void Game::drawShape(struct Shape s, int8_t ox, int8_t oy){
   switch(s.type){
     case NONE:
       break;
