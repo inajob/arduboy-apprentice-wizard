@@ -18,6 +18,7 @@ SceneID Title::run(){
         game->loadExample(game->stage);
         game->isPractice = false;
         game->isTimeAttack = false;
+        game->mode = CIRCLE;
         sound.tone(880, 100);
         return READY;
         break;
@@ -25,11 +26,13 @@ SceneID Title::run(){
         game->loadExample(game->stage);
         game->isPractice = false;
         game->isTimeAttack = true;
+        game->mode = CIRCLE;
         sound.tone(880, 100);
         return GAME;
         break;
       case 2:
         game->isPractice = true;
+        game->mode = CIRCLE;
         sound.tone(880, 100);
         return GAME;
         break;
