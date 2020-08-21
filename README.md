@@ -22,3 +22,11 @@ Support langage is English and Japanse.
 # Thanks
 
 - https://github.com/emutyworks/8x8DotJPFont
+
+# Changelog
+
+## v1.1
+
+- update latest libraries
+- change mode name: Practice to Sketch
+- reset cursor mode in the begining of Arcade mode
