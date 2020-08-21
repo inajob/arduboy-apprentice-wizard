@@ -37,7 +37,7 @@ void AllClear::draw(){
     arduboy.println();
     arduboy.println();
     arduboy.println(F("    APPRENTICE WIZARD"));
-    arduboy.println(F("              Ver 1.0"));
+    arduboy.println(F("              Ver 1.1"));
     arduboy.println(F("          by @ina_ani"));
   }else{
     arduboy.setCursor(0,0);
@@ -52,7 +52,7 @@ void AllClear::draw(){
     arduboy.println(F("        YOUR PLAY!!"));
     arduboy.println();
     arduboy.println(F("    APPRENTICE WIZARD"));
-    arduboy.println(F("              Ver 1.0"));
+    arduboy.println(F("              Ver 1.1"));
     arduboy.println(F("          by @ina_ani"));
   }
 }
