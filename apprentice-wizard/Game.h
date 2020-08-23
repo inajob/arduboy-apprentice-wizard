@@ -45,7 +45,7 @@ class Game : public Scene
   void clear();
   bool check();
   void drawRect(struct Shape s, int8_t ox = 0, int8_t oy = 0);
-  void drawUtri(struct Shape s, int8_t ox = 0, char oy = 0);
+  void drawUtri(struct Shape s, int8_t ox = 0, int8_t oy = 0);
   void drawDtri(struct Shape s, int8_t ox = 0, int8_t oy = 0);
   void drawVLine(struct Shape s, int8_t ox = 0, int8_t oy = 0);
   void drawCircle(struct Shape s, int8_t ox = 0, int8_t oy = 0);
