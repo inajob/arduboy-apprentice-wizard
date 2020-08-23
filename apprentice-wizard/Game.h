@@ -35,7 +35,7 @@ class Game : public Scene
   bool showCursor = true;
   bool showShapeSelector = false;
   byte shapeSelectorTimer = 0;
-  bool isPractice = false;
+  bool isFreestyle = false;
   bool isJP = false;
   uint16_t timer = 0;
   bool isTimeAttack = false;

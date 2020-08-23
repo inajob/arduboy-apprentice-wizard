@@ -209,13 +209,13 @@ void Game::drawShape(struct Shape s, int8_t ox, int8_t oy){
 void Game::gameDraw(){
   for(byte i = 0; i < MAX_SHAPE; i ++){
     drawShape(shapes[i]);
-    if(!isPractice){
+    if(!isFreestyle){
       drawShape(exampleShapes[i], 64, 0);
     }
   }
-  if(isPractice){
+  if(isFreestyle){
     arduboy.setCursor(64+16,0);
-    arduboy.println(F("PRACTICE"));
+    arduboy.println(F("Freestyle"));
   }
 }
 
@@ -270,7 +270,7 @@ SceneID Game::run(){
     anim = (abs(anim) - 0.1)*(anim/abs(anim));
   }
 
-  if(!isPractice && check()){
+  if(!isFreestyle && check()){
     sound.tone(NOTE_C5, 200, NOTE_C6, 200, NOTE_C7, 400);
     return CLEAR;
   }
@@ -279,7 +279,7 @@ SceneID Game::run(){
     if(arduboy.pressed(B_BUTTON)){
       sound.tone(880, 100, 440, 100, 220, 100);
       clear();
-      if(isPractice){
+      if(isFreestyle){
         return TITLE;
       }
     }else{
