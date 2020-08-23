@@ -44,11 +44,6 @@ class Game : public Scene
   bool equalShape(struct Shape s1, struct Shape s2);
   void clear();
   bool check();
-  void drawRect(struct Shape s, int8_t ox = 0, int8_t oy = 0);
-  void drawUtri(struct Shape s, int8_t ox = 0, int8_t oy = 0);
-  void drawDtri(struct Shape s, int8_t ox = 0, int8_t oy = 0);
-  void drawVLine(struct Shape s, int8_t ox = 0, int8_t oy = 0);
-  void drawCircle(struct Shape s, int8_t ox = 0, int8_t oy = 0);
   void drawShape(struct Shape s, int8_t ox = 0, int8_t oy = 0);
   void drawShapeSelector();
   void gameDraw();

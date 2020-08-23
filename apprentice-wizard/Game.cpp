@@ -98,111 +98,120 @@ bool Game::check(){
   return true;
 }
 
-void Game::drawRect(struct Shape s, int8_t ox, int8_t oy){
-  double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
-  double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
-  double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
-  double ry1 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 1.0/2))/sqrt(2);
-  double rx2 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/2))/sqrt(2);
-  double ry2 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/2))/sqrt(2);
-  double rx3 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 3.0/2))/sqrt(2);
-  double ry3 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 3.0/2))/sqrt(2);
+void Game::drawShape(struct Shape s, int8_t ox, int8_t oy)
+{
+  const double squareRootOfTwo = sqrt(2);
 
-  double x0 = rx0 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y0 = ry0 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x1 = rx1 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y1 = ry1 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x2 = rx2 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y2 = ry2 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x3 = rx3 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y3 = ry3 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  const double size = ((7.0 * s.size) * scale);
+  const double angle = (s.pos.theta - cursor.theta - anim - 2);
+  const double temporary = (2.0 * angle / 8);
 
-  arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
-  arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
-  arduboy.drawLine(ox + x2, oy + y2, ox + x3, oy + y3);
-  arduboy.drawLine(ox + x3, oy + y3, ox + x0, oy + y0);
-}
-void Game::drawUtri(struct Shape s, int8_t ox, int8_t oy){
-  double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
-  double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        )/sqrt(2);
-  double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3))/sqrt(2);
-  double ry1 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3))/sqrt(2);
-  double rx2 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 4.0/3))/sqrt(2);
-  double ry2 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 4.0/3))/sqrt(2);
+  const double cosAngle = cos(PI * temporary);
+  const double sinAngle = sin(PI * temporary);
 
-  double x0 = rx0 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y0 = ry0 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x1 = rx1 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y1 = ry1 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x2 = rx2 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y2 = ry2 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
+  const double adjustment = (8 * s.pos.r * scale);
+  const double adjustedCosAngle = (adjustment * cosAngle);
+  const double adjustedSinAngle = (adjustment * sinAngle);
 
-  arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
-  arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
-  arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
-}
-void Game::drawDtri(struct Shape s, int8_t ox, int8_t oy){
-  double rx0 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8         + 1.0/3))/sqrt(2);
-  double ry0 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8         + 1.0/3))/sqrt(2);
-  double rx1 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3 + 1.0/3))/sqrt(2);
-  double ry1 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 2.0/3 + 1.0/3))/sqrt(2);
-  double rx2 = (7.0*s.size)*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 4.0/3 + 1.0/3))/sqrt(2);
-  double ry2 = (7.0*s.size)*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8 + 4.0/3 + 1.0/3))/sqrt(2);
+  ox += 32;
+  oy += 32;
 
-  double x0 = rx0 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y0 = ry0 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x1 = rx1 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y1 = ry1 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x2 = rx2 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y2 = ry2 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-
-  arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
-  arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
-  arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
-}
-void Game::drawVLine(struct Shape s, int8_t ox, int8_t oy){
-  double rx0 = (4.0*(0))*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        );
-  double ry0 = (4.0*(0))*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)        );
-  double rx1 = (4.0*(2))*scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8));
-  double ry1 = (4.0*(2))*scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8));
-
-  double x0 = rx0 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y0 = ry0 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double x1 = rx1 + 8*s.pos.r * scale * cos(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-  double y1 = ry1 + 8*s.pos.r * scale * sin(PI*(2.0*(s.pos.theta - cursor.theta - anim - 2)/8)) + 32;
-
-  arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
-  arduboy.drawLine(ox + x1, oy + y1, ox + x0, oy + y0);
-}
-
-
-void Game::drawCircle(struct Shape s, int8_t ox, int8_t oy){
-  arduboy.drawCircle(
-    32 + 8*s.pos.r*scale*cos(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + ox,
-    32 + 8*s.pos.r*scale*sin(PI*2/8*(s.pos.theta - cursor.theta - anim - 2)) + oy,
-    s.size * 4 * scale
-  );
-}
-void Game::drawShape(struct Shape s, int8_t ox, int8_t oy){
-  switch(s.type){
+  switch(s.type)
+  {
     case NONE:
       break;
     case RECT:
-      drawRect(s, ox, oy);
+      {
+        double rx0 = size * cos(PI * (temporary)        ) / squareRootOfTwo;
+        double ry0 = size * sin(PI * (temporary)        ) / squareRootOfTwo;
+        double rx1 = size * cos(PI * (temporary + 1.0 / 2)) / squareRootOfTwo;
+        double ry1 = size * sin(PI * (temporary + 1.0 / 2)) / squareRootOfTwo;
+        double rx2 = size * cos(PI * (temporary + 2.0 / 2)) / squareRootOfTwo;
+        double ry2 = size * sin(PI * (temporary + 2.0 / 2)) / squareRootOfTwo;
+        double rx3 = size * cos(PI * (temporary + 3.0 / 2)) / squareRootOfTwo;
+        double ry3 = size * sin(PI * (temporary + 3.0 / 2)) / squareRootOfTwo;
+
+        double x0 = rx0 + adjustedCosAngle;
+        double y0 = ry0 + adjustedSinAngle;
+        double x1 = rx1 + adjustedCosAngle;
+        double y1 = ry1 + adjustedSinAngle;
+        double x2 = rx2 + adjustedCosAngle;
+        double y2 = ry2 + adjustedSinAngle;
+        double x3 = rx3 + adjustedCosAngle;
+        double y3 = ry3 + adjustedSinAngle;
+
+        arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
+        arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
+        arduboy.drawLine(ox + x2, oy + y2, ox + x3, oy + y3);
+        arduboy.drawLine(ox + x3, oy + y3, ox + x0, oy + y0);
+      }
       break;
     case CIRCLE:
-      drawCircle(s, ox, oy);
+      {
+        double x0 = adjustedCosAngle + ox;
+        double y0 = adjustedSinAngle + oy;
+
+        arduboy.drawCircle(x0, y0, s.size * 4 * scale);
+      }
       break;
     case UTRI:
-      drawUtri(s, ox, oy);
+      {
+        double rx0 = size * cos(PI * (temporary)          ) / squareRootOfTwo;
+        double ry0 = size * sin(PI * (temporary)          ) / squareRootOfTwo;
+        double rx1 = size * cos(PI * (temporary + 2.0 / 3)) / squareRootOfTwo;
+        double ry1 = size * sin(PI * (temporary + 2.0 / 3)) / squareRootOfTwo;
+        double rx2 = size * cos(PI * (temporary + 4.0 / 3)) / squareRootOfTwo;
+        double ry2 = size * sin(PI * (temporary + 4.0 / 3)) / squareRootOfTwo;
+
+        double x0 = rx0 + adjustedCosAngle;
+        double y0 = ry0 + adjustedSinAngle;
+        double x1 = rx1 + adjustedCosAngle;
+        double y1 = ry1 + adjustedSinAngle;
+        double x2 = rx2 + adjustedCosAngle;
+        double y2 = ry2 + adjustedSinAngle;
+
+        arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
+        arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
+        arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
+      }
       break;
     case DTRI:
-      drawDtri(s, ox, oy);
+      {
+        double rx0 = size * cos(PI * (temporary           + 1.0 / 3)) / squareRootOfTwo;
+        double ry0 = size * sin(PI * (temporary           + 1.0 / 3)) / squareRootOfTwo;
+        double rx1 = size * cos(PI * (temporary + 2.0 / 3 + 1.0 / 3)) / squareRootOfTwo;
+        double ry1 = size * sin(PI * (temporary + 2.0 / 3 + 1.0 / 3)) / squareRootOfTwo;
+        double rx2 = size * cos(PI * (temporary + 4.0 / 3 + 1.0 / 3)) / squareRootOfTwo;
+        double ry2 = size * sin(PI * (temporary + 4.0 / 3 + 1.0 / 3)) / squareRootOfTwo;
+
+        double x0 = rx0 + adjustedCosAngle;
+        double y0 = ry0 + adjustedSinAngle;
+        double x1 = rx1 + adjustedCosAngle;
+        double y1 = ry1 + adjustedSinAngle;
+        double x2 = rx2 + adjustedCosAngle;
+        double y2 = ry2 + adjustedSinAngle;
+
+        arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
+        arduboy.drawLine(ox + x1, oy + y1, ox + x2, oy + y2);
+        arduboy.drawLine(ox + x2, oy + y2, ox + x0, oy + y0);
+      }
       break;
     case VLINE:
-      drawVLine(s, ox, oy);
-      break;
+      {
+        double rx0 = (4.0 * 0) * scale * cosAngle;
+        double ry0 = (4.0 * 0) * scale * sinAngle;
+        double rx1 = (4.0 * 2) * scale * cosAngle;
+        double ry1 = (4.0 * 2) * scale * sinAngle;
 
+        double x0 = rx0 + adjustedCosAngle;
+        double y0 = ry0 + adjustedSinAngle;
+        double x1 = rx1 + adjustedCosAngle;
+        double y1 = ry1 + adjustedSinAngle;
+
+        arduboy.drawLine(ox + x0, oy + y0, ox + x1, oy + y1);
+        arduboy.drawLine(ox + x1, oy + y1, ox + x0, oy + y0);
+      }
+      break;
   }
 }
 
