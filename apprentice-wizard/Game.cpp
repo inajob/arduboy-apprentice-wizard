@@ -223,7 +223,7 @@ void Game::gameDraw(){
     }
   }
   if(isFreestyle){
-    arduboy.setCursor(64+16,0);
+    arduboy.setCursor(64+8,0);
     arduboy.println(F("Freestyle"));
   }
 }
