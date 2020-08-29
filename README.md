@@ -26,6 +26,7 @@ Support langage is English and Japanse.
 # Changelog
 
 ## v1.2
+- Support Arduino IDE
 - Refactoring for memory usage.
 - Rename Practice to Freestyle.
 
