@@ -25,6 +25,10 @@ Support langage is English and Japanse.
 
 # Changelog
 
+## v1.2
+- Refactoring for memory usage.
+- Rename Practice to Freestyle.
+
 ## v1.1
 
 - update latest libraries
